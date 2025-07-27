@@ -5,26 +5,19 @@ export function HomeNavbar() {
   const authMember = null;
   return (
     <div className="home-navbar">
-      <Container sx={{ mt: "55px", height: "642px" }}>
+      <Container className="navbar-container">
         <Stack
-          sx={{ height: "50px" }}
-          flexDirection={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
+         className="menu"
         >
           <Box>
             <NavLink to={"/"}>
               <img
-                src="/icons/burak.svg"
-                style={{ width: "125px", height: "30px" }}
+               className="brand-logo"
               />
             </NavLink>
           </Box>
           <Stack
-            flexDirection={"row"}
-            justifyContent={"space-between"}
-            minWidth={"700px"}
-            alignItems={"center"}
+           className="links"
           >
             <Box className={"hover-line"}>
               <NavLink to="/" activeClassName="underline">
@@ -65,12 +58,18 @@ export function HomeNavbar() {
               <Box>
                 <Button
                   variant="contained"
-                  style={{ background: "#3776CC", color: "#f8f8ff" }}
+                 className="login-button"
                 >
                   Login
                 </Button>
               </Box>
-            ) : null}
+            ) : (
+              <img
+               className="user-avatar"
+                src="/icons/default-user.svg"
+                aria-haspopup={"true"}
+              />
+            )}
           </Stack>
         </Stack>
         <Stack>Details</Stack>
