@@ -1,21 +1,67 @@
 import TabPanel from "@mui/lab/TabPanel";
-import { Box, Stack } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
+import moment from "moment";
 import React from "react";
 
-export default function PausedOrders() {
+export default function ProcessOrders() {
   return (
     <TabPanel value="2">
       <Stack>
-        
-        
-        {[1, 2].map((ele, index) => {
+
+        {[1,2,3,4].map((ele, index) => {
           return (
-             <Box></Box>
-          )
-        }) }
+            <Box key={index} className="order-main-box">
+              <Box className="order-box-scroll">
+                {[1,2,3].map((ele2, index2) => {
+                  return (
+                    <Box className="order-wrapper">
+                      <Box key={index2} className="orders-name-price">
+                        <img
+                          src={"/img/lavash.webp"}
+                          alt="lavash"
+                          className="order-dish-img"
+                        />
+                        <p className="title-dish">Lavash</p>
+                      </Box>
 
+                      <Box className="price-box">
+                        <p>$9</p>
+                        <img src="/icons/close.svg" alt="" />
+                        <p>2</p>
+                        <img src="/icons/pause.svg" alt="" />
+                        <p style={{ marginLeft: "15px" }}>$24</p>
+                      </Box>
+                    </Box>
+                  );
+                })}
+                <Box className="total-calculate-box">
+                  <p className="product-total-name">Product Price</p>
+                  <p className="product-prices">$60</p>
+                  <img src="/icons/plus.svg" alt="" />
+                  <p className="product-total-name">Delivery Cost</p>
+                  <p className="product-prices">$5</p>
+                  <img src="/icons/pause.svg" alt="" />
+                  <p className="product-total-name">Total</p>
+                  <p className="product-prices">$65</p>
+                 <Box className="process-time">
+                  {moment().format("YY-MM-DD HH:mm")}
+                 </Box>
+                  <Button className="product-verify-butt" variant="contained">VERIFY TO fulfil</Button>
+                </Box>
+              </Box>
+            </Box>
+          );
+        })}
 
-
+        {false && (
+          <Box
+            display={"flex"}
+            flexDirection={"row"}
+            justifyContent={"center"}
+          >
+            <img src="/icons/noimage-list.svg" style={{ width: 300, height: 300}} />
+          </Box>
+        )}
       </Stack>
     </TabPanel>
   );

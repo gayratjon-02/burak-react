@@ -13,7 +13,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 export default function OrdersPage() {
   // hooks
 
-  const [value, setValue] = useState("1");
+  const [value, setValue] = useState("3");
 
   const handleChange = (e: SyntheticEvent, newValue: string) => {
     setValue(newValue);
