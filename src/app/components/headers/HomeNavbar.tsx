@@ -1,9 +1,32 @@
 import { Box, Button, Container, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import Basket from "./Basket";
+import { useEffect, useState } from "react";
 
-export  default function HomeNavbar() {
+export default function HomeNavbar() {
   const authMember = null;
+  const [count, setCount] = useState<number>(0);
+  const [value, setValue] = useState<boolean>(true);
+
+  useEffect(
+    () => {
+      console.log("componentDidMount", count); // DATA FETCH
+      setCount(count + 1);
+      // bu component qurilganda faqat bir marta ishga tushadi
+      // agar arrayga qiiymar kiritsak , qiymat ozgarganda qayta ishga tushadi
+
+      return () => {
+        console.log("componentWillUnmount");
+      };
+    },
+    [value] // array dependencies -> componentDidUpdate ga togri keladi
+  );
+
+  /** HANDLERS **/
+  const buttonHandler = () => {
+    setValue(!value);
+  };
+
   return (
     <div className="home-navbar">
       <Container className="navbar-container">
@@ -48,7 +71,7 @@ export  default function HomeNavbar() {
               </NavLink>
             </Box>
             {/* BASKET  */}
-            <Basket/>
+            <Basket />
 
             {!authMember ? (
               <Box>
@@ -69,10 +92,16 @@ export  default function HomeNavbar() {
           <Stack className="detail">
             <Box className="head-main-txt">World's Most Delicious Cousine</Box>
             <Box className="wel-txt">The Choice, not just a choice</Box>
-            <Box className="service-txt">24 hours service</Box>
+            <Box className="service-txt">{count} hours service</Box>
             <Box className="signup">
               {!authMember ? (
-                <Button variant="contained" className="signup-button">SIGN UP</Button>
+                <Button
+                  variant="contained"
+                  className="signup-button"
+                  onClick={buttonHandler}
+                >
+                  SIGN UP
+                </Button>
               ) : null}
             </Box>
           </Stack>
