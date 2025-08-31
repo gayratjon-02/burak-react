@@ -1,4 +1,3 @@
-import React from "react";
 import { Box, Button, Container, Stack, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -8,8 +7,23 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { url } from "inspector";
 import { Input } from "@mui/base/Input";
+
+import { setProducts } from "./slice";
+import { useDispatch, useSelector } from "react-redux";
+import { Product } from "../../../lib/types/product";
+import { Dispatch } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
+import { retrieveProducts } from "./selector";
+
+/**  REDUX SLICE & SELECTOR  **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+});
+
+const productRetriever = createSelector(retrieveProducts, (products) => ({
+  products,
+}));
 
 const products = [
   { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
@@ -175,19 +189,19 @@ export default function Products() {
           <Box className="category-title">Our Family Brands</Box>
           <Stack className="brand-list">
             <Box className="review-box">
-              <img src="/img/gurme.webp" width={'100px'} alt="Burak img" />
+              <img src="/img/gurme.webp" width={"100px"} alt="Burak img" />
             </Box>
 
             <Box className="review-box">
-              <img src="/img/gurme.webp" width={'100px'} alt="Burak img" />
+              <img src="/img/gurme.webp" width={"100px"} alt="Burak img" />
             </Box>
 
             <Box className="review-box">
-              <img src="/img/gurme.webp" width={'100px'} alt="Burak img" />
+              <img src="/img/gurme.webp" width={"100px"} alt="Burak img" />
             </Box>
 
             <Box className="review-box">
-              <img src="/img/gurme.webp" width={'100px'} alt="Burak img" />
+              <img src="/img/gurme.webp" width={"100px"} alt="Burak img" />
             </Box>
           </Stack>
         </Container>
