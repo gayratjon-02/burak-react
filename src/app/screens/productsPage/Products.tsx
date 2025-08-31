@@ -15,6 +15,10 @@ import { Product } from "../../../lib/types/product";
 import { Dispatch } from "@reduxjs/toolkit";
 import { createSelector } from "reselect";
 import { retrieveProducts } from "./selector";
+import ProductService from "../../services/ProductService";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+import { useEffect } from "react";
+import { serverApi } from "../../../lib/config";
 
 /**  REDUX SLICE & SELECTOR  **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -25,18 +29,24 @@ const productRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-const products = [
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Lavash", imagePath: "/img/lavash.webp" },
-  { productName: "Cutlet", imagePath: "/img/cutlet.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab.webp" },
-  { productName: "Kebab", imagePath: "/img/kebab-fresh.webp" },
-];
-
 export default function Products() {
+  const { setProducts } = actionDispatch(useDispatch());
+  const { products } = useSelector(productRetriever);
+
+  useEffect(() => {
+    const product = new ProductService();
+    product
+      .getProducts({
+        page: 1,
+        limit: 8,
+        order: "createdAt",
+        productCollection: ProductCollection.DISH,
+        search: "",
+      })
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <div className="products">
       <Container>
@@ -96,14 +106,19 @@ export default function Products() {
             {/*  */}
             <Stack className="product-wrapper">
               {products.length !== 0 ? (
-                products.map((product, index) => {
+                products.map((product: Product) => {
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const sizeVolume =
+                    product.productCollection === ProductCollection.DRINK
+                      ? product.productVolume + " litre"
+                      : product.productSize + " size";
                   return (
-                    <Stack key={index} className="product-card">
+                    <Stack key={product._id} className="product-card">
                       <Stack
                         className="product-image"
-                        sx={{ backgroundImage: `url(${product.imagePath})` }}
+                        sx={{ backgroundImage: `url(${imagePath})` }}
                       >
-                        <div className="product-sale">Normal size</div>
+                        <div className="product-sale">{sizeVolume}</div>
                         {/* back-eye-wrapper */}
                         <Stack className="back-eye-wrapper">
                           <Button className="shop-btn">
@@ -116,7 +131,7 @@ export default function Products() {
 
                           <Button className="view-btn" sx={{ right: "36px" }}>
                             <Badge
-                              badgeContent={21}
+                              badgeContent={product.productViews}
                               color="secondary"
                               slotProps={{
                                 badge: {
@@ -134,9 +149,13 @@ export default function Products() {
                             >
                               <RemoveRedEyeIcon
                                 sx={{
-                                  color: "white",
                                   width: "24px",
                                   height: "18px",
+
+                                  color:
+                                    product.productViews === 0
+                                      ? "gray"
+                                      : "white",
                                 }}
                               />
                             </Badge>
@@ -150,7 +169,7 @@ export default function Products() {
                         </span>
                         <div className="product-desc-price">
                           <MonetizationOnIcon />
-                          {12}
+                          {product.productPrice}
                         </div>
                       </Box>
                     </Stack>
