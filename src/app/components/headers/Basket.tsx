@@ -111,7 +111,7 @@ export default function Basket(props: BasketProps) {
               {cartItems.map((item: CartItem) => {
                 const imagePath = `${serverApi}/${item.image}`;
                 return (
-                  <Box className={"basket-info-box"}>
+                  <Box className={"basket-info-box"} key={item._id}>
                     <div className={"cancel-btn"}>
                       <CancelIcon
                         color={"primary"}
@@ -143,7 +143,9 @@ export default function Basket(props: BasketProps) {
           </Box>
           {cartItems.length !== 0 ? (
             <Box className={"basket-order"}>
-              <span className={"price"}>Total: ${totalPrice} ({itemsPrice} +{shippingCost})</span>
+              <span className={"price"}>
+                Total: ${totalPrice} ({itemsPrice} +{shippingCost})
+              </span>
               <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
                 Order
               </Button>

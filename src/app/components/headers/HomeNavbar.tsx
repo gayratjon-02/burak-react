@@ -10,27 +10,24 @@ interface HomeNavbarrProps {
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
   onDeleteAll: () => void;
+  setSignupOpen: (isOpen: boolean) => void;
+  setLoginOpen: (isOpen: boolean) => void;
 }
 
 export default function HomeNavbar(props: HomeNavbarrProps) {
-  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
-  const authMember = null;
+  const {
+    cartItems,
+    onAdd,
+    onRemove,
+    onDelete,
+    onDeleteAll,
+    setSignupOpen,
+    setLoginOpen,
+  } = props;
   const [count, setCount] = useState<number>(0);
   const [value, setValue] = useState<boolean>(true);
 
-  useEffect(
-    () => {
-      console.log("componentDidMount", count); // DATA FETCH
-      setCount(count + 1);
-      // bu component qurilganda faqat bir marta ishga tushadi
-      // agar arrayga qiiymar kiritsak , qiymat ozgarganda qayta ishga tushadi
-
-      return () => {
-        console.log("componentWillUnmount");
-      };
-    },
-    [value] // array dependencies -> componentDidUpdate ga togri keladi
-  );
+  const authMember = null;
 
   /** HANDLERS **/
   const buttonHandler = () => {
@@ -91,7 +88,7 @@ export default function HomeNavbar(props: HomeNavbarrProps) {
 
             {!authMember ? (
               <Box>
-                <Button variant="contained" className="login-button">
+                <Button variant="contained" className="login-button" onClick={() => setLoginOpen(true)}>
                   Login
                 </Button>
               </Box>
@@ -108,13 +105,13 @@ export default function HomeNavbar(props: HomeNavbarrProps) {
           <Stack className="detail">
             <Box className="head-main-txt">World's Most Delicious Cousine</Box>
             <Box className="wel-txt">The Choice, not just a choice</Box>
-            <Box className="service-txt">{count} hours service</Box>
+            <Box className="service-txt">24 hours service</Box>
             <Box className="signup">
               {!authMember ? (
                 <Button
                   variant="contained"
                   className="signup-button"
-                  onClick={buttonHandler}
+                  onClick={() => setSignupOpen(true)}
                 >
                   SIGN UP
                 </Button>
