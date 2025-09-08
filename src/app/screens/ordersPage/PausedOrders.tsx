@@ -1,7 +1,6 @@
 import TabPanel from "@mui/lab/TabPanel";
 import { Box, Button, Stack } from "@mui/material";
 import React from "react";
-
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { serverApi } from "../../../lib/config";
@@ -48,7 +47,7 @@ export default function PausedOrders() {
                         <p>{item.itemQuantity} </p>
                         <img src="/icons/pause.svg" alt="" />
                         <p style={{ marginLeft: "15px" }}>
-                          ${item.itemQuantity * item.itemPrice}{" "}
+                          ${item.itemQuantity * item.itemPrice}
                         </p>
                       </Box>
                     </Box>
