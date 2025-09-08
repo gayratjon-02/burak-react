@@ -98,8 +98,8 @@ export default function Products(props: ProductsProps) {
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Stack className="avatar-big-box" flexDirection={"row"}>
             <Box className="avatar-title">Burak Restaurant</Box>
-            <Box className="main-input-search">
-              <Button className="search-inp">
+            <Stack className="main-input-search">
+              <Box className="search-inp">
                 <Input
                   placeholder="Type here"
                   value={searchText}
@@ -108,11 +108,13 @@ export default function Products(props: ProductsProps) {
                     if (e.key === "Enter") searchProductHandler();
                   }}
                 />
-              </Button>
-              <Button className="search-icon" onClick={searchProductHandler}>
-                Search <SearchIcon />
-              </Button>
-            </Box>
+              </Box>
+              <Box>
+                <Button className="search-icon" onClick={searchProductHandler}>
+                  Search <SearchIcon />
+                </Button>
+              </Box>
+            </Stack>
           </Stack>
           <Stack className="dishes-filter-section">
             <Stack

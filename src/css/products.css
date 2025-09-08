@@ -51,16 +51,21 @@
 
 .products-page .products .avatar-big-box .main-input-search {
   position: relative;
-  width: 368px;
+  width: 400px;
   height: 40px;
+
+  display: flex;
+  justify-content: center;
 }
 
 .products-page .products .avatar-big-box .search-icon {
+  margin-left: 30px;
+  margin-bottom: 10px;
   width: 106px;
   height: 36px;
 
   position: absolute;
-  top: 6px;
+  top: 3px;
   left: 230px;
 
   border-radius: 18.5px;
@@ -137,19 +142,23 @@
 
 .products-page .product-wrapper {
   margin-left: 30px;
-  width: 1194px;
+  width: 100%;
   height: auto;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 30px;
 }
 .products-page .product-wrapper .product-card {
   margin-bottom: 40px;
   width: 271px;
   height: 361px;
 
+  box-sizing: border-box;
+
   display: flex;
+  flex: 0 0 calc(25% - 30px); /* har qatorda 4 tadan */
   flex-direction: column;
   justify-content: space-between;
 }
@@ -355,8 +364,6 @@
   letter-spacing: 0%;
   color: rgb(52, 52, 52);
 }
-
-
 
 /** ChosenProduct **/
 
