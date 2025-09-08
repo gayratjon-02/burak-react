@@ -6,14 +6,28 @@ import { SyntheticEvent, useState } from "react";
 import { TabContext } from "@mui/lab";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import "../../../css/order.css";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
+import "../../../css/order.css";
+import { Order } from "../../../lib/types/order";
+
+/**  REDUX SLICE & SELECTOR  **/
+
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
+  setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+  setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+});
 
 export default function OrdersPage() {
-  // hooks
+  const { setPausedOrders, setProcessOrders, setFinishedOrders } =
+    actionDispatch(useDispatch());
+  const [value, setValue] = useState("1");
 
-  const [value, setValue] = useState("3");
+  /** HANDLERS **/
 
   const handleChange = (e: SyntheticEvent, newValue: string) => {
     setValue(newValue);
