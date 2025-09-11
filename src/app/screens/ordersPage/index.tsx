@@ -10,6 +10,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
+import { useHistory } from "react-router-dom";
 import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
 import { Order, OrderInquiry } from "../../../lib/types/order";
 import { OrderStatus } from "../../../lib/enums/order.enum";
@@ -28,7 +29,8 @@ const actionDispatch = (dispatch: Dispatch) => ({
 export default function OrdersPage() {
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
-  const { orderBuilder } = useGlobals();
+  const { orderBuilder, authMember } = useGlobals();
+  const history = useHistory();
   const [value, setValue] = useState("1");
 
   const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
@@ -61,6 +63,8 @@ export default function OrdersPage() {
   const handleChange = (e: SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
+
+  if (!authMember) history.push("/");
 
   return (
     <div className="order-page">

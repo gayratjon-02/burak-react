@@ -119,8 +119,8 @@ export default function HomeNavbar(props: HomeNavbarrProps) {
               <img
                 className="user-avatar"
                 src={
-                  authMember?.memberImages
-                    ? `${serverApi}/${authMember?.memberImages}`
+                  authMember?.memberImage
+                    ? `${serverApi}/${authMember?.memberImage}`
                     : "/icons/default-user.svg"
                 }
                 aria-haspopup={"true"}
