@@ -17,6 +17,7 @@ import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/orderService";
 import { useGlobals } from "../../hooks/useGlobals";
 import "../../../css/order.css";
+import { serverApi } from "../../../lib/config";
 
 /**  REDUX SLICE & SELECTOR  **/
 
@@ -97,16 +98,29 @@ export default function OrdersPage() {
         <Stack className="order-right">
           <Stack className="order-right-top">
             <Stack className="order-img-box">
-              <img className="main-img" src="/img/justin.webp" width={"100"} />
+              <img
+                className="main-img"
+                src={
+                  authMember?.memberImage
+                    ? `${serverApi}/${authMember.memberImage}`
+                    : "/icons/default-user.svg"
+                }
+                width={"100"}
+              />
               <AccountCircleIcon className="account-icon" />
-              <span>Justin</span>
-              <h1>User</h1>
+              <span> {authMember?.memberNick}</span>
+              <h1> {authMember?.memberType}</h1>
             </Stack>
             <Stack className="order-location-box">
               <div className="location-line"></div>
               <Stack className="location-box">
                 <LocationOnIcon className="location-icon" />
-                <p>South Korea, Busan</p>
+                <p>
+                  {" "}
+                  {authMember?.memberAddress
+                    ? authMember.memberAddress
+                    : "no address"}
+                </p>
               </Stack>
             </Stack>
           </Stack>
