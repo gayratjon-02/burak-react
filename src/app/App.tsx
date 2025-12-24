@@ -1,52 +1,30 @@
 import React, { useState } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
+
+/* Screens */
 import HomePage from "./screens/homePage";
 import ProductsPage from "./screens/productsPage";
 import OrdersPage from "./screens/ordersPage";
 import UserPage from "./screens/userPage";
+import HelpPage from "./screens/helpPage";
+
+/* Components */
 import HomeNavbar from "./components/headers/HomeNavbar";
 import OtherNavbar from "./components/headers/OtherNavbar";
 import Footer from "./components/footer";
-import HelpPage from "./screens/helpPage";
-import useBasket from "./hooks/useBasket";
 import AuthenticationModal from "./components/auth";
+
+/* Hooks & Services */
+import useBasket from "./hooks/useBasket";
+import { useGlobals } from "./hooks/useGlobals";
+import MemberService from "./services/MemberService";
+
+/* Utils */
 import { sweetErrorHandling, sweetTopSuccessAlert } from "../lib/sweetAlert";
 import { Messages } from "../lib/config";
-import MemberService from "./services/MemberService";
-import { useGlobals } from "./hooks/useGlobals";
+
+/* Styles */
 import "../css/app.css";
-<<<<<<< HEAD
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import { Link, Route, Switch } from "react-router-dom";
-import { HomePage } from "./screens/homePage";
-import { ProductsPage } from "./screens/productsPage";
-import { OrdersPage } from "./screens/ordersPage";
-import { UserPage } from "./screens/userPage";
-
-function App() {
-  return (
-    <div>
-      <nav>
-        <ul>
-        <li>
-            <Link to="/">HomePage</Link>
-          </li>
-          <li>
-            <Link to="/products">ProductsPage</Link>
-          </li>
-          <li>
-            <Link to="/orders">OrdersPage</Link>
-          </li>
-          <li>
-            <Link to="/member-page">UserPage</Link>
-          </li>
-        </ul>
-      </nav>
-
-      <Switch>
-        <Route path="/products">
-          <ProductsPage />
-=======
 import "../css/navbar.css";
 import "../css/footer.css";
 import "../css/products.css";
@@ -54,12 +32,14 @@ import "../css/products.css";
 function App() {
   const location = useLocation();
   const { setAuthMember } = useGlobals();
+
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = useBasket();
-  const [signupOpen, setSignupOpen] = useState<boolean>(false);
-  const [loginOpen, setLoginOpen] = useState<boolean>(false);
+
+  const [signupOpen, setSignupOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  /** HANDLERS **/
+  /* HANDLERS */
 
   const handleSignupClose = () => setSignupOpen(false);
   const handleLoginClose = () => setLoginOpen(false);
@@ -78,7 +58,7 @@ function App() {
       await sweetTopSuccessAlert("success", 700);
       setAuthMember(null);
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(Messages.error1);
     }
   };
@@ -114,31 +94,29 @@ function App() {
           handleLogoutRequest={handleLogoutRequest}
         />
       )}
+
       <Switch>
         <Route path="/products">
           <ProductsPage onAdd={onAdd} />
->>>>>>> develop
         </Route>
+
         <Route path="/orders">
           <OrdersPage />
         </Route>
+
         <Route path="/member-page">
           <UserPage />
         </Route>
-<<<<<<< HEAD
-=======
 
         <Route path="/help">
           <HelpPage />
         </Route>
->>>>>>> develop
+
         <Route path="/">
           <HomePage />
         </Route>
       </Switch>
-<<<<<<< HEAD
-    </div>
-=======
+
       <Footer />
 
       <AuthenticationModal
@@ -148,7 +126,6 @@ function App() {
         handleSignupClose={handleSignupClose}
       />
     </>
->>>>>>> develop
   );
 }
 

@@ -1,30 +1,25 @@
-<<<<<<< HEAD
-import { Container } from "@mui/material";
-
-export function HomePage() {
-    return <Container>HomePage</Container>;
-  }
-=======
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+
 import Statistics from "./Statistics";
 import PopularDishes from "./PopularDishes";
 import NewDishes from "./NewDishes";
 import Advertisement from "./Advertisement";
 import ActiveUsers from "./ActiveUsers";
 import Events from "./Events";
-import { useDispatch } from "react-redux";
-import { Dispatch } from "@reduxjs/toolkit";
+
 import { setNewDishes, setPopularDishes, setTopUsers } from "./slice";
-import { retrieveNewDishes, retrievePopularDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
-import ProductService from "../../services/ProductService";
-import { ProductCollection } from "../../../lib/enums/product.enum";
 import { Member } from "../../../lib/types/member";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+
+import ProductService from "../../services/ProductService";
 import MemberService from "../../services/MemberService";
+
 import "../../../css/home.css";
 
-/**  REDUX SLICE & SELECTOR  **/
-
+/** REDUX ACTIONS */
 const actionDispatch = (dispatch: Dispatch) => ({
   setPopularDishes: (data: Product[]) => dispatch(setPopularDishes(data)),
   setNewDishes: (data: Product[]) => dispatch(setNewDishes(data)),
@@ -37,36 +32,29 @@ export default function HomePage() {
   );
 
   useEffect(() => {
-    // Backend server data fetch => Data
+    const productService = new ProductService();
 
-    const product = new ProductService();
-    product
+    productService
       .getProducts({
         page: 1,
         limit: 4,
         order: "productViews",
-        // productCollection: ProductCollection.DISH,
       })
-      .then((data) => {
-        setPopularDishes(data);
-      })
-      .catch((err) => console.log(err));
+      .then(setPopularDishes)
+      .catch(console.error);
 
-    product
+    productService
       .getProducts({
         page: 1,
         limit: 4,
         order: "createdAt",
         productCollection: ProductCollection.DISH,
       })
-      .then((data) => setNewDishes(data))
-      .catch((err) => console.log(err));
+      .then(setNewDishes)
+      .catch(console.error);
 
-    const member = new MemberService();
-    member
-      .getTopUsers()
-      .then((data) => setTopUsers(data))
-      .catch((err) => console.log(err));
+    const memberService = new MemberService();
+    memberService.getTopUsers().then(setTopUsers).catch(console.error);
   }, []);
 
   return (
@@ -78,6 +66,5 @@ export default function HomePage() {
       <ActiveUsers />
       <Events />
     </div>
-  )
+  );
 }
->>>>>>> develop

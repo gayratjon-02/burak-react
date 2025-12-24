@@ -1,36 +1,31 @@
-<<<<<<< HEAD
-import { Container } from "@mui/material";
-
-export function ProductsPage() {
-    return <Container>ProductsPage</Container>;
-  }
-=======
 import React from "react";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { Container } from "@mui/material";
+
 import ChosenProduct from "./ChosenProduct";
 import Products from "./Products";
+
 import { CartItem } from "../../../lib/types/search";
 
 interface ProductsPageProps {
   onAdd: (item: CartItem) => void;
 }
 
-export default function ProductsPage(props: ProductsPageProps) {
-  const { onAdd } = props;
-  const products = useRouteMatch();
+const ProductsPage: React.FC<ProductsPageProps> = ({ onAdd }) => {
+  const { path } = useRouteMatch();
+
   return (
     <div className="products-page">
       <Switch>
-        <Route path={`${products.path}/:productId`}>
+        <Route path={`${path}/:productId`}>
           <ChosenProduct onAdd={onAdd} />
         </Route>
 
-        <Route path={`${products.path}`}>
+        <Route exact path={path}>
           <Products onAdd={onAdd} />
         </Route>
       </Switch>
     </div>
   );
-}
->>>>>>> develop
+};
+
+export default ProductsPage;
